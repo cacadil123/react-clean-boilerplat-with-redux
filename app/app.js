@@ -12,6 +12,8 @@ import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { throttle } from 'lodash';
+
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
@@ -21,6 +23,7 @@ import App from 'containers/App';
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
+import { loadState, saveState } from '../localStorage';
 
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
@@ -34,8 +37,17 @@ import configureStore from './configureStore';
 import { translationMessages } from './i18n';
 
 // Create redux store with history
-const initialState = {};
+const initialState = loadState();
 const store = configureStore(initialState, history);
+store.subscribe(
+  throttle(() => {
+    // saveState(store.getState()) store the complete state, but I just need the user object so:
+    saveState({
+      login1: store.getState().login1, // note I am using immutablejs
+    });
+  }, 1000),
+); // don't persist on disk too often, once per second maybe...
+
 const MOUNT_NODE = document.getElementById('app');
 
 const render = messages => {

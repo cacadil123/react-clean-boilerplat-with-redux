@@ -9,10 +9,11 @@ const login = request =>
 
 function* loginEvent(action) {
   try {
-    const hasToken = yield call(login, {
-      ...action.payload,
-    });
-    yield put(loginUserSuccess(hasToken));
+    yield put(
+      loginUserSuccess({
+        token: 333,
+      }),
+    );
   } catch (err) {
     if (
       err &&

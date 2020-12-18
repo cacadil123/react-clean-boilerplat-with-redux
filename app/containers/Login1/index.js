@@ -33,6 +33,7 @@ export function Login1({ dispatch, login1 }) {
     };
     dispatch(loginUser(obj));
   };
+
   return (
     <div>
       <Input
@@ -40,6 +41,7 @@ export function Login1({ dispatch, login1 }) {
         onChange={e => setName(e.target.value)}
         placeholder="Enter Name"
       />
+      <h1>{login1 && login1.login.token}</h1>
       <Button type="button" onClick={onSubmit} value="submit name" />
     </div>
   );
