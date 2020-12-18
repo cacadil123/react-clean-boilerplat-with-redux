@@ -11,7 +11,7 @@ function* loginEvent(action) {
   try {
     yield put(
       loginUserSuccess({
-        token: 333,
+        token: 11,
       }),
     );
   } catch (err) {
@@ -24,7 +24,13 @@ function* loginEvent(action) {
     } else {
       const loginError = 'Invalid Username or password, please try again.';
 
-      yield put(loginUserError(loginError));
+      yield put(
+        loginUserError({
+          login: {
+            token: 2,
+          },
+        }),
+      );
     }
   }
 }

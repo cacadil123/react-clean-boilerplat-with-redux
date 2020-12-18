@@ -41,10 +41,10 @@ const initialState = loadState();
 const store = configureStore(initialState, history);
 store.subscribe(
   throttle(() => {
-    // saveState(store.getState()) store the complete state, but I just need the user object so:
-    saveState({
-      login1: store.getState().login1, // note I am using immutablejs
-    });
+    saveState(store.getState());
+    // saveState({
+    //   login1: store.getState().login1, // note I am using immutablejs
+    // });
   }, 1000),
 ); // don't persist on disk too often, once per second maybe...
 
